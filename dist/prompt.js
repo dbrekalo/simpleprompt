@@ -77,11 +77,11 @@
 
 		execute: function(){
 
-			this.close();
-
 			if ( this.options.confirm ) {
 				this.options.context ? this.options.confirm.call( this.options.context ) : this.options.confirm();
 			}
+
+			this.destroy();
 
 		},
 
@@ -90,6 +90,12 @@
 			if ( this.options.cancel ) {
 				this.options.context ? this.options.cancel.call( this.options.context ) : this.options.cancel();
 			}
+
+			this.destroy();
+
+		},
+
+		destroy: function(){
 
 			$document.off( this.ens );
 			this.$el.remove();

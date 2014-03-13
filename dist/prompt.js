@@ -1,8 +1,10 @@
 ;(function($, window, document){
 
+	"use strict";
+
 	var instance_counter = 0,
-		$document = (window.app && window.app.$document) || $(document);
-		$body = (window.app && window.app.$body) || $(body);
+		$document = (window.app && window.app.$document) || $(document),
+		$body = (window.app && window.app.$body) || $('body');
 
 	function PromptFacade(message, confirmCallback, cancelCallback){
 
@@ -24,27 +26,32 @@
 
 	Prompt.defaults = {
 		message: 'Are you sure',
-		cancel_text: 'Cancel',
-		accept_text: 'Confirm',
-		cancel_btn_class: '',
-		accept_btn_class: '',
+		cancelText: 'Cancel',
+		acceptText: 'Confirm',
+
+		overlayClass: 'prompt_overlay',
+		moduleClass: 'prompt_box',
+		messageClass: 'message',
+		cancelBtnClass: '',
+		acceptBtnClass: '',
+
 		confirm: null,
 		cancel: null
 	};
 
 	var api = {
 
-		init: function( options ){
+		init: function(){
 
 			this.ens = '.prompt' + (++instance_counter);
 
 			this.$el = $(
-				'<div class="prompt_overlay">\
-					<div class="prompt_box">\
-						<p>'+ this.options.message +'</p>\
+				'<div class="'+ this.options.overlayClass +'">\
+					<div class="'+ this.options.moduleClass +'">\
+						<p class="'+ this.options.messageClass +'">'+ this.options.message +'</p>\
 						<div class="controls">\
-							<a class="cancel '+ this.options.cancel_btn_class +'">'+ this.options.cancel_text +'</a>\
-							<a class="accept '+ this.options.accept_btn_class +'">'+ this.options.accept_text +'</a>\
+							<a class="cancel '+ this.options.cancelBtnClass +'">'+ this.options.cancelText +'</a>\
+							<a class="accept '+ this.options.acceptBtnClass +'">'+ this.options.acceptText +'</a>\
 						</div>\
 					</div>\
 				 </div>'
@@ -80,12 +87,12 @@
 
 		close: function(){
 
-			$document.off( this.ens );
-			this.$el.remove();
-
 			if ( this.options.cancel ) {
 				this.options.context ? this.options.cancel.call( this.options.context ) : this.options.cancel();
 			}
+
+			$document.off( this.ens );
+			this.$el.remove();
 
 		}
 
@@ -97,4 +104,4 @@
 	$.wk.prompt = PromptFacade;
 	$.wk.prompt.defaults = Prompt.defaults;
 
-})(jQuery || Zepto, window, document);
+})(window.jQuery || window.Zepto, window, document);

@@ -32,10 +32,15 @@ app.prompt({
 ```javascript
 $.wk.prompt.defaults = {
 	message: 'Are you sure',
-	cancel_text: 'Cancel',
-	accept_text: 'Confirm',
-	cancel_btn_class: '',
-	accept_btn_class: '',
+	cancelText: 'Cancel',
+	acceptText: 'Confirm',
+
+	overlayClass: 'prompt_overlay',
+	moduleClass: 'prompt_box',
+	messageClass: 'message',
+	cancelBtnClass: '',
+	acceptBtnClass: '',
+
 	confirm: null,
 	cancel: null
 };

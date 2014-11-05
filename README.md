@@ -41,6 +41,8 @@ $.wk.prompt.defaults = {
 	cancelBtnClass: '',
 	acceptBtnClass: '',
 
+	closeOnOverlayClick: false,
+
 	confirm: null,
 	cancel: null
 };

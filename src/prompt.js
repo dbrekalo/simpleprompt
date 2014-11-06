@@ -52,12 +52,14 @@
 					<div class="'+ this.options.moduleClass +'">\
 						<p class="'+ this.options.messageClass +'">'+ this.options.message +'</p>\
 						<div class="controls">\
-							<a class="cancel '+ this.options.cancelBtnClass +'">'+ this.options.cancelText +'</a>\
-							<a class="accept '+ this.options.acceptBtnClass +'">'+ this.options.acceptText +'</a>\
+							<a href="#" class="cancel '+ this.options.cancelBtnClass +'">'+ this.options.cancelText +'</a>\
+							<a href="#" class="accept '+ this.options.acceptBtnClass +'">'+ this.options.acceptText +'</a>\
 						</div>\
 					</div>\
 				 </div>'
 			).appendTo($body);
+
+			this.$el.find('.accept').focus();
 
 			this.events();
 
@@ -67,8 +69,8 @@
 
 			var self = this;
 
-			this.$el.on('click' + this.ens, '.cancel', function(){ self.close(); } );
-			this.$el.on('click'+ this.ens, '.accept', function(){ self.execute(); } );
+			this.$el.on('click' + this.ens, '.cancel', function(e){ e.preventDefault(); self.close(); } );
+			this.$el.on('click'+ this.ens, '.accept', function(e){ e.preventDefault(); self.execute(); } );
 
 			this.options.closeOnOverlayClick && this.$el.on('click', function(e){
 				$(e.target).is(self.$el) && self.close();
@@ -76,7 +78,6 @@
 
 			$document.on('keyup'+ this.ens, function(e){
 				if ( e.keyCode === 27) { self.close(); }
-				if ( e.keyCode === 13) { self.execute(); }
 			});
 
 		},

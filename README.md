@@ -35,6 +35,7 @@ $.wk.prompt.defaults = {
 	cancelText: 'Cancel',
 	acceptText: 'Confirm',
 
+	htmlClass: 'prompt_active',
 	overlayClass: 'prompt_overlay',
 	moduleClass: 'prompt_box',
 	messageClass: 'message',
@@ -42,9 +43,11 @@ $.wk.prompt.defaults = {
 	acceptBtnClass: '',
 
 	closeOnOverlayClick: false,
+	closeOnEscapeKey: true,
 
 	confirm: null,
-	cancel: null
+	cancel: null,
+	afterRender: null
 };
 ```
 

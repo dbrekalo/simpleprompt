@@ -7,7 +7,7 @@
 
     function Prompt(message, confirmCallback, cancelCallback) {
 
-        return this instanceof Prompt ? this.init(arguments.length === 1 ? message : {
+        return this instanceof Prompt ? this.init(typeof message === 'object' ? message : {
             message: message,
             confirm: confirmCallback,
             cancel: cancelCallback

@@ -1,6 +1,6 @@
 {
   "name": "Simpleprompt",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-copy": "^0.6.0",

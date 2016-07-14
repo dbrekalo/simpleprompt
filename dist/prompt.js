@@ -1,8 +1,18 @@
-;(function($, window, document) {
+(function(factory) {
+
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory(require('jquery'));
+    } else {
+        factory(jQuery);
+    }
+
+}(function($) {
 
     var instanceCounter = 0,
-        $document = $(document),
-        $html = $('html'),
+        $document = $(window.document),
+        $html,
         $body;
 
     function Prompt(message, confirmCallback, cancelCallback) {
@@ -36,7 +46,7 @@
 
             this.options.afterRender && this.options.afterRender(this.$el, this);
 
-            $html.addClass(this.options.htmlClass);
+            ($html = $html || $('html')).addClass(this.options.htmlClass);
 
             this.$el.find('.accept').focus();
 
@@ -95,9 +105,9 @@
     });
 
     $.wk = $.wk || {};
-    $.wk.prompt = Prompt;
+    $.wk.prompt = $.simplePrompt = Prompt;
 
-    $.wk.prompt.defaults = Prompt.defaults = {
+    Prompt.defaults = {
         message: 'Are you sure',
         cancelText: 'Cancel',
         acceptText: 'Confirm',
@@ -117,4 +127,6 @@
         afterRender: null
     };
 
-})(window.jQuery || window.Zepto, window, document);
+    return $;
+
+}));

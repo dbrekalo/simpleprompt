@@ -13,7 +13,10 @@ describe ("SimplePrompt constructor", function() {
 
     it('produces instance and assignes options', function() {
 
-        var prompt = new Prompt('Test');
+        var prompt = new Prompt({
+            message: 'Test',
+            validateInput: null,
+        });
 
         assert.instanceOf(prompt, Prompt);
         assert.deepEqual(prompt.options, {
@@ -27,13 +30,17 @@ describe ("SimplePrompt constructor", function() {
             messageClass: 'message',
             cancelBtnClass: '',
             acceptBtnClass: '',
+            inputClass: '',
 
             closeOnOverlayClick: false,
             closeOnEscapeKey: true,
 
+            hasUserInput: false,
+
             confirm: null,
             cancel: null,
-            afterRender: null
+            afterRender: null,
+            validateInput: null
         });
 
     });

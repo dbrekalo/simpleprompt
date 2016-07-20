@@ -45,6 +45,10 @@
                  </div>'
             ).appendTo($body = $body || $('body'));
 
+            if (this.options.hasUserInput) {
+                this.$userInput = $('<p><input type="text"></p>').appendTo(this.$el.find('.message')).find('input');
+            }
+
             this.options.afterRender && this.options.afterRender(this.$el, this);
 
             ($html = $html || $('html')).addClass(this.options.htmlClass);
@@ -65,7 +69,13 @@
 
             }).on('click' + this.ens, '.accept', function(e) {
 
-                e.preventDefault(); self.execute();
+                e.preventDefault();
+
+                if (self.options.hasUserInput) {
+                    self.validate() && self.execute();
+                } else {
+                    self.execute();
+                }
 
             });
 
@@ -76,6 +86,12 @@
             this.options.closeOnEscapeKey && $document.on('keyup' + this.ens, function(e) {
                 e.keyCode === 27 && self.close();
             });
+
+        },
+
+        validate: function() {
+
+            return this.options.validateInput(this.$userInput.val());
 
         },
 
@@ -119,13 +135,20 @@
         messageClass: 'message',
         cancelBtnClass: '',
         acceptBtnClass: '',
+        inputClass: '',
 
         closeOnOverlayClick: false,
         closeOnEscapeKey: true,
 
+        hasUserInput: false,
+
         confirm: null,
         cancel: null,
-        afterRender: null
+        afterRender: null,
+        validateInput: function(inputText) {
+            return inputText.length > 0;
+        }
+
     };
 
     return $;

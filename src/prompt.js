@@ -6,7 +6,7 @@
     } else if (typeof module === 'object' && module.exports) {
         module.exports = factory(require('jquery'));
     } else {
-        factory(jQuery);
+        factory(window.jQuery);
     }
 
 }(function($) {
@@ -46,7 +46,7 @@
             ).appendTo($body = $body || $('body'));
 
             if (this.options.hasUserInput) {
-                this.$userInput = $('<p><input type="text"></p>').appendTo(this.$el.find('.message')).find('input');
+                this.$userInput = $('<input class="' + this.options.inputClass + '" type="text">').insertAfter(this.$el.find('.message'));
             }
 
             this.options.afterRender && this.options.afterRender(this.$el, this);
@@ -122,7 +122,7 @@
     });
 
     $.wk = $.wk || {};
-    $.wk.prompt = $.simplePrompt = Prompt;
+    $.wk.prompt = $.simplePrompt = $.SimplePrompt = Prompt;
 
     Prompt.defaults = {
         message: 'Are you sure',
@@ -135,7 +135,7 @@
         messageClass: 'message',
         cancelBtnClass: '',
         acceptBtnClass: '',
-        inputClass: '',
+        inputClass: 'prompt_input',
 
         closeOnOverlayClick: false,
         closeOnEscapeKey: true,

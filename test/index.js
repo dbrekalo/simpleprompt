@@ -63,6 +63,16 @@ describe ("SimplePrompt constructor", function() {
 
     });
 
+    it('adds user input field', function() {
+
+        var prompt = new Prompt({
+            hasUserInput: true,
+        });
+
+        assert.isOk($('input'));
+
+    });
+
     it('calls after render method when one is given', function() {
 
         var test;
@@ -105,6 +115,35 @@ describe("SimplePrompt events", function() {
         $('.accept').trigger('click');
 
         assert.isTrue(test);
+
+    });
+
+    it('validate if user input is empty on confirm click', function() {
+
+        var prompt = new Prompt({
+            hasUserInput: true
+        });
+        $('input').val('');
+        $('.accept').trigger('click');
+
+        assert.equal($('.prompt_active').length, 1);
+
+    });
+
+    it('allows custom validate methd on confirm click', function() {
+
+        var test;
+        var prompt = new Prompt({
+            hasUserInput: true,
+            validateInput: function(inputText){
+                test = inputText;
+                return true;
+            }
+        });
+        $('input').val('message');
+        $('.accept').trigger('click');
+
+        assert.equal(test, 'message');
 
     });
 

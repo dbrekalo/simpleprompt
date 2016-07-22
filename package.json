@@ -13,7 +13,7 @@
   ],
   "main": "src/prompt.js",
   "scripts": {
-    "build": "npm test && grunt build",
+    "build": "npm test && npm run coverage && grunt build",
     "watch": "grunt build && grunt watch",
     "bump:patch": "grunt bump:patch",
     "bump:minor": "grunt bump:minor",

@@ -4,44 +4,41 @@
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 1000;
   background-color: rgba(255, 255, 255, 0.6);
-  z-index: 1000; }
+  font-family: Arial, sans-serif; }
 
 .prompt_box {
-  display: block;
   position: absolute;
-  left: 50%;
-  margin-left: -14em;
-  top: 20%;
   width: 20em;
+  left: 50%;
+  top: 40%;
+  margin: -5em 0 0 -10em;
   border: 1px solid #e9e9e9;
   background-color: #fff;
   text-align: center; }
   .prompt_box > .message {
-    font-size: 16px;
-    font-family: 'Open Sans', Arial, sans-serif;
-    font-weight: 400;
-    text-align: center;
-    padding: 3em 3em 2em;
+    font-size: 1.6em;
+    padding: 1.875em 1.875em 1.25em;
     margin: 0;
-    color: #808080; }
+    text-align: center;
+    color: #808080;
+    box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.05); }
   .prompt_box > .controls {
     position: relative;
-    border-top: 1px solid #e9e9e9;
-    overflow: hidden; }
+    overflow: hidden;
+    border-top: 1px solid #e9e9e9; }
     .prompt_box > .controls a {
+      font-size: 1.4em;
+      font-weight: bold;
       float: left;
       width: 50%;
-      padding: 14px 0;
-      box-sizing: border-box;
-      font-size: 14px;
-      font-family: 'Open Sans', Arial, sans-serif;
-      font-weight: 600;
-      text-transform: uppercase;
-      text-align: center;
+      padding: 1.07143em 0;
       color: #a6a6a6;
-      text-decoration: none; }
-    .prompt_box > .controls .accept {
+      text-decoration: none;
+      text-transform: uppercase;
+      text-align: center; }
+    .prompt_box > .controls > .accept {
       color: #808080;
       border-left: 1px solid #e9e9e9; }
   .prompt_box > input {
@@ -50,13 +47,13 @@
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
-    font-family: 'Open Sans', Arial, sans-serif;
-    font-size: 16px;
+    font-size: 1.6em;
+    font-family: Arial, sans-serif;
     display: block;
     box-sizing: border-box;
     width: 80%;
-    padding: 10px 5px;
-    margin: 0 auto 2.5em;
+    margin: 0 auto 1.5625em;
+    padding: 0.625em 0.3125em;
     color: #808080;
     border: 1px solid #e9e9e9;
-    background-color: transparent; }
+    background: transparent; }

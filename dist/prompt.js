@@ -45,7 +45,7 @@
                  </div>'
             ).appendTo($body = $body || $('body'));
 
-            if (this.options.hasUserInput) {
+            if (this.options.requiresUserInput) {
                 this.$userInput = $('<input class="' + this.options.inputClass + '" type="text">').insertAfter(this.$el.find('.message'));
             }
 
@@ -71,7 +71,7 @@
 
                 e.preventDefault();
 
-                if (self.options.hasUserInput) {
+                if (self.options.requiresUserInput) {
                     self.validate() && self.execute();
                 } else {
                     self.execute();
@@ -91,23 +91,24 @@
 
         validate: function() {
 
-            return this.options.validateInput(this.$userInput.val());
+            return this.options.validateInput(this.$userInput.val(), this.$userInput, this);
 
         },
 
         execute: function() {
 
-            this.options.confirm && this.options.confirm.call(this.options.context || window);
+            var userInput = this.options.requiresUserInput ? this.$userInput.val() : undefined;
 
-            this.destroy();
+            this.options.confirm && this.options.confirm.call(this.options.context || window, userInput, this);
+
+            return this.destroy();
 
         },
 
         close: function() {
 
             this.options.cancel && this.options.cancel.call(this.options.context || window);
-
-            this.destroy();
+            return this.destroy();
 
         },
 
@@ -117,14 +118,14 @@
             $html.removeClass(this.options.htmlClass);
             this.$el.remove();
 
+            return this;
+
         }
 
     });
 
-    $.wk = $.wk || {};
-    $.wk.prompt = $.simplePrompt = $.SimplePrompt = Prompt;
-
     Prompt.defaults = {
+
         message: 'Are you sure',
         cancelText: 'Cancel',
         acceptText: 'Confirm',
@@ -140,16 +141,20 @@
         closeOnOverlayClick: false,
         closeOnEscapeKey: true,
 
-        hasUserInput: false,
+        requiresUserInput: false,
+        validateInput: function(inputText) {
+            return inputText.length > 0;
+        },
 
         confirm: null,
         cancel: null,
-        afterRender: null,
-        validateInput: function(inputText) {
-            return inputText.length > 0;
-        }
+        context: null,
+        afterRender: null
 
     };
+
+    $.wk = $.wk || {};
+    $.wk.prompt = $.simplePrompt = $.SimplePrompt = Prompt;
 
     return $;
 

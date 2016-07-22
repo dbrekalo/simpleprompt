@@ -2,44 +2,37 @@
 
 .prompt_overlay {
 
-    position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+    position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 1000;
     background-color: rgba(255, 255, 255, 0.6);
-    z-index: 1000;
+    font-family: Arial, sans-serif;
 
 }
 
 .prompt_box {
 
-    display: block; position: absolute; left: 50%; margin-left: -14em; top: 20%;
-    width: 20em;
-    border: 1px solid #e9e9e9; background-color: #fff;
-    text-align: center;
+    position: absolute; width: 20em; left: 50%; top: 40%; margin: -5em 0 0 -10em;
+    border: 1px solid #e9e9e9; background-color: #fff; text-align: center;
 
     > .message {
 
-        font-size: 16px; font-family: 'Open Sans', Arial, sans-serif; font-weight: 400;
-        text-align: center;
-        padding: 3em 3em 2em; margin: 0;
-        color: #808080;
+        font-size: 1.6em; padding: em(30,16) em(30,16) em(20,16); margin: 0;
+        text-align: center; color: #808080; box-shadow: 0 0.2em 0.5em rgba(#000, 0.05);
 
     }
 
     > .controls {
 
-        position: relative;
+        position: relative; overflow: hidden;
         border-top: 1px solid #e9e9e9;
-        overflow: hidden;
 
         a {
 
-            float: left; width: 50%; padding: 14px 0; box-sizing: border-box;
-            font-size: 14px; font-family: 'Open Sans', Arial, sans-serif; font-weight: 600;
-            text-transform: uppercase;  text-align: center;
-            color: #a6a6a6; text-decoration: none;
+            font-size: 1.4em; font-weight: bold; float: left; width: 50%; padding: em(15,14) 0;
+            color: #a6a6a6; text-decoration: none; text-transform: uppercase;  text-align: center;
 
         }
 
-        .accept {
+        > .accept {
 
             color: #808080; border-left: 1px solid #e9e9e9;
 
@@ -48,12 +41,11 @@
 
     > input {
 
-      @include appearance(none);
+        @include appearance(none);
 
-      font-family: 'Open Sans', Arial, sans-serif; font-size: 16px;
-      display: block; box-sizing: border-box; width: 80%;
-      padding: 10px 5px;  margin: 0 auto 2.5em;
-      color: #808080; border: 1px solid #e9e9e9; background-color: transparent;
+        font-size: 1.6em; font-family: Arial, sans-serif;
+        display: block; box-sizing: border-box; width: 80%; margin: 0 auto em(25,16); padding: em(10,16) em(5,16);
+        color: #808080; border: 1px solid #e9e9e9; background: transparent;
 
     }
 

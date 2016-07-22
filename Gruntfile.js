@@ -63,7 +63,7 @@ module.exports = function(grunt) {
                     'dist/prompt.css': 'src/prompt.scss'
                 },
                 options: {
-                    outputStyle: 'compressed',
+                    outputStyle: 'expandend',
                     sourceMap: false,
                     precision: 5
                 }

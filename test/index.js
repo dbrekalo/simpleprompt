@@ -75,10 +75,12 @@ describe ('SimplePrompt constructor', function() {
 
 describe('SimplePrompt templating', function() {
 
-    it('properly setups html classes to elements', function() {
+    it('properly setups html classes and labels to elements', function() {
 
         var prompt = Prompt({
             htmlClass: 'prompt_active',
+            cancelText: 'Cancel',
+            acceptText: 'Confirm',
             overlayClass: 'prompt_overlay',
             moduleClass: 'prompt_box',
             messageClass: 'message',
@@ -94,6 +96,8 @@ describe('SimplePrompt templating', function() {
         assert.isTrue(prompt.$el.find('.message').length > 0);
         assert.isTrue(prompt.$el.find('.cancel_btn').length > 0);
         assert.isTrue(prompt.$el.find('.accept_btn').length > 0);
+        assert.isTrue(prompt.$el.find('.cancel_btn').text() === 'Cancel');
+        assert.isTrue(prompt.$el.find('.accept_btn').text() === 'Confirm');
         assert.isTrue(prompt.$el.find('input').hasClass('prompt_input'));
 
     });

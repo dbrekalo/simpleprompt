@@ -1,29 +1,50 @@
+@-webkit-keyframes prompt_fade_in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@-moz-keyframes prompt_fade_in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes prompt_fade_in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
 .prompt_overlay {
+  -webkit-animation: prompt_fade_in 0.5s;
+  -moz-animation: prompt_fade_in 0.5s;
+  animation: prompt_fade_in 0.5s;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.6);
-  font-family: Arial, sans-serif; }
+  background-color: rgba(0, 0, 0, 0.5); }
 
 .prompt_box {
   position: absolute;
-  width: 20em;
+  width: 30em;
   left: 50%;
   top: 40%;
-  margin: -5em 0 0 -10em;
-  border: 1px solid #e9e9e9;
+  margin: -4em 0 0 -15em;
+  font-family: Arial, sans-serif;
   background-color: #fff;
-  text-align: center; }
+  text-align: center;
+  box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.2);
+  border-radius: 0.3em; }
   .prompt_box > .message {
     font-size: 1.6em;
     padding: 1.875em 1.875em 1.25em;
     margin: 0;
     text-align: center;
-    color: #808080;
-    box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.05); }
+    color: #4B4B4B; }
   .prompt_box > .controls {
     position: relative;
     overflow: hidden;
@@ -38,9 +59,14 @@
       text-decoration: none;
       text-transform: uppercase;
       text-align: center; }
+      .prompt_box > .controls a:hover {
+        color: #8d8d8d; }
     .prompt_box > .controls > .accept {
-      color: #808080;
-      border-left: 1px solid #e9e9e9; }
+      color: #5D5B5B;
+      border-left: 1px solid #e9e9e9;
+      margin-left: -1px; }
+      .prompt_box > .controls > .accept:hover {
+        color: #434242; }
   .prompt_box > input {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -51,9 +77,9 @@
     font-family: Arial, sans-serif;
     display: block;
     box-sizing: border-box;
-    width: 80%;
+    width: 85%;
     margin: 0 auto 1.5625em;
-    padding: 0.625em 0.3125em;
+    padding: 0.5em 0.625em;
     color: #808080;
-    border: 1px solid #e9e9e9;
+    border: 1px solid #d4d4d4;
     background: transparent; }

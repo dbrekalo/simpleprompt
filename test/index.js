@@ -103,65 +103,63 @@ describe('SimplePrompt templating', function() {
 
 describe('SimplePrompt events', function() {
 
-    it('calls confirm callback on accept', function() {
+    it('calls confirm callback on accept', sinon.test(function() {
 
         var prompt = new Prompt({
-            confirm: sinon.spy()
+            confirm: this.spy()
         });
 
         prompt.$el.find('.accept').trigger('click');
         sinon.assert.calledOnce(prompt.options.confirm);
 
-        prompt = new Prompt('Test message', sinon.spy());
+        prompt = new Prompt('Test message', this.spy());
 
         prompt.$el.find('.accept').trigger('click');
         sinon.assert.calledOnce(prompt.options.confirm);
 
-    });
+    }));
 
-    it('calls cancel callback on reject', function() {
+    it('calls cancel callback on reject', sinon.test(function() {
 
         var prompt = new Prompt({
-            cancel: sinon.spy()
+            cancel: this.spy()
         });
 
         prompt.$el.find('.cancel').trigger('click');
         sinon.assert.calledOnce(prompt.options.cancel);
 
-        prompt = new Prompt('Test message', null, sinon.spy());
+        prompt = new Prompt('Test message', null, this.spy());
 
         prompt.$el.find('.cancel').trigger('click');
         sinon.assert.calledOnce(prompt.options.cancel);
 
-    });
+    }));
 
-    it('close prompt on escape key', function() {
+    it('close prompt on escape key', sinon.test(function() {
 
         var prompt = new Prompt();
         var e = $.Event('keyup');
         e.keyCode = 27;
 
-        var closeOnEscapeSpy = sinon.spy(prompt, 'close');
+        var closeOnEscapeSpy = this.spy(prompt, 'close');
         $(document).trigger(e);
 
         sinon.assert.calledOnce(closeOnEscapeSpy);
-        closeOnEscapeSpy.restore();
 
-    });
+    }));
 
-    it('close prompt on overlay click', function() {
+    it('close prompt on overlay click', sinon.test(function() {
 
         var prompt = new Prompt({
             closeOnOverlayClick: true
         });
 
-        var closeOnOverlaySpy = sinon.spy(prompt, 'close');
+        var closeOnOverlaySpy = this.spy(prompt, 'close');
         $('.prompt_overlay').trigger('click');
 
         sinon.assert.calledOnce(closeOnOverlaySpy);
-        closeOnOverlaySpy.restore();
 
-    });
+    }));
 
 });
 
@@ -177,21 +175,21 @@ describe('SimplePrompt user input', function() {
 
     });
 
-    it('validate if user input is empty on confirm click', function() {
+    it('validate if user input is empty on confirm click', sinon.test(function() {
 
         var prompt = new Prompt({
             requiresUserInput: true,
-            validateInput: sinon.spy()
+            validateInput: this.spy()
         });
 
         $('.accept').trigger('click');
 
         sinon.assert.calledOnce(prompt.options.validateInput);
-        sinon.assert.notCalled(sinon.spy(prompt, 'close'));
+        sinon.assert.notCalled(this.spy(prompt, 'close'));
 
-    });
+    }));
 
-    it('allows custom validation', function() {
+    it('allows custom validation', sinon.test(function() {
 
         var test = false;
         var prompt = Prompt({
@@ -199,21 +197,18 @@ describe('SimplePrompt user input', function() {
             validateInput: function(inputText) {
                 return inputText.length > 6;
             },
-            confirm: sinon.spy()
+            confirm: this.spy()
         });
 
-        var validateSpy = sinon.spy(prompt.options, 'validateInput');
+        var validateSpy = this.spy(prompt.options, 'validateInput');
 
         prompt.$el.find('input').val('test123');
         prompt.$el.find('.accept').trigger('click');
 
-        sinon.assert.calledOnce(validateSpy);
         sinon.assert.calledWith(validateSpy, 'test123');
-        sinon.assert.calledOnce(prompt.options.confirm);
+        sinon.assert.callOrder(validateSpy, prompt.options.confirm);
 
-        validateSpy.restore();
-
-    });
+    }));
 
     it('runs confirm callback with right parameters', function() {
 

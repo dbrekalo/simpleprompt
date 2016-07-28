@@ -1,5 +1,6 @@
 var assert = require('chai').assert;
 var jsdom = require('jsdom').jsdom;
+var sinon = require('sinon');
 
 global.document = jsdom('<body></body>');
 global.window = document.defaultView;
@@ -104,41 +105,33 @@ describe('SimplePrompt events', function() {
 
     it('calls confirm callback on accept', function() {
 
-        var confirmCallbackCalled1 = false;
-        var confirmCallbackCalled2 = false;
+        var prompt = new Prompt({
+            confirm: sinon.spy()
+        });
 
-        Prompt({
-            confirm: function() {
-                confirmCallbackCalled1 = true;
-            }
-        }).$el.find('.accept').trigger('click');
+        prompt.$el.find('.accept').trigger('click');
+        sinon.assert.calledOnce(prompt.options.confirm);
 
-        Prompt('Test message', function() {
-            confirmCallbackCalled2 = true;
-        }).$el.find('.accept').trigger('click');
+        prompt = new Prompt('Test message', sinon.spy());
 
-        assert.isTrue(confirmCallbackCalled1);
-        assert.isTrue(confirmCallbackCalled2);
+        prompt.$el.find('.accept').trigger('click');
+        sinon.assert.calledOnce(prompt.options.confirm);
 
     });
 
     it('calls cancel callback on reject', function() {
 
-        var cancelCallbackCalled1 = false;
-        var cancelCallbackCalled2 = false;
+        var prompt = new Prompt({
+            cancel: sinon.spy()
+        });
 
-        Prompt({
-            cancel: function() {
-                cancelCallbackCalled1 = true;
-            }
-        }).$el.find('.cancel').trigger('click');
+        prompt.$el.find('.cancel').trigger('click');
+        sinon.assert.calledOnce(prompt.options.cancel);
 
-        Prompt('Test message', null, function() {
-            cancelCallbackCalled2 = true;
-        }).$el.find('.cancel').trigger('click');
+        prompt = new Prompt('Test message', null, sinon.spy());
 
-        assert.isTrue(cancelCallbackCalled1);
-        assert.isTrue(cancelCallbackCalled2);
+        prompt.$el.find('.cancel').trigger('click');
+        sinon.assert.calledOnce(prompt.options.cancel);
 
     });
 
@@ -147,9 +140,12 @@ describe('SimplePrompt events', function() {
         var prompt = new Prompt();
         var e = $.Event('keyup');
         e.keyCode = 27;
+
+        var closeOnEscapeSpy = sinon.spy(prompt, 'close');
         $(document).trigger(e);
 
-        assert.equal($('.prompt_active').length, 0);
+        sinon.assert.calledOnce(closeOnEscapeSpy);
+        closeOnEscapeSpy.restore();
 
     });
 
@@ -158,9 +154,12 @@ describe('SimplePrompt events', function() {
         var prompt = new Prompt({
             closeOnOverlayClick: true
         });
+
+        var closeOnOverlaySpy = sinon.spy(prompt, 'close');
         $('.prompt_overlay').trigger('click');
 
-        assert.equal($('.prompt_active').length, 0);
+        sinon.assert.calledOnce(closeOnOverlaySpy);
+        closeOnOverlaySpy.restore();
 
     });
 
@@ -180,10 +179,15 @@ describe('SimplePrompt user input', function() {
 
     it('validate if user input is empty on confirm click', function() {
 
-        var prompt = new Prompt({requiresUserInput: true});
+        var prompt = new Prompt({
+            requiresUserInput: true,
+            validateInput: sinon.spy()
+        });
+
         $('.accept').trigger('click');
 
-        assert.equal($('.prompt_active').length, 1);
+        sinon.assert.calledOnce(prompt.options.validateInput);
+        sinon.assert.notCalled(sinon.spy(prompt, 'close'));
 
     });
 
@@ -195,15 +199,19 @@ describe('SimplePrompt user input', function() {
             validateInput: function(inputText) {
                 return inputText.length > 6;
             },
-            confirm: function() {
-                test = true;
-            }
+            confirm: sinon.spy()
         });
 
-        prompt.$el.find('input').val('test');
+        var validateSpy = sinon.spy(prompt.options, 'validateInput');
+
+        prompt.$el.find('input').val('test123');
         prompt.$el.find('.accept').trigger('click');
 
-        assert.isFalse(test);
+        sinon.assert.calledOnce(validateSpy);
+        sinon.assert.calledWith(validateSpy, 'test123');
+        sinon.assert.calledOnce(prompt.options.confirm);
+
+        validateSpy.restore();
 
     });
 

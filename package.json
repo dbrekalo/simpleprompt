@@ -38,7 +38,8 @@
     "istanbul": "^0.4.4",
     "jsdom": "^9.4.1",
     "load-grunt-tasks": "^0.6.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.5"
   },
   "dependencies": {
     "jquery": ">=1.11"
